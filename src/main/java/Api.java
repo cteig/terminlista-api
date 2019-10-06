@@ -25,9 +25,9 @@ public class Api {
     public static void main(String[] args) {
         initLogging();
         log.info("Starting");
-        HikariDataSource hikariDataSource = createDataSource();
+        //HikariDataSource hikariDataSource = createDataSource();
 
-        sql2o = new Sql2o(hikariDataSource);
+        //sql2o = new Sql2o(hikariDataSource);
         Javalin app = Javalin.create()
                 .enableStaticFiles("/static")
                 .start(5000);
@@ -42,7 +42,7 @@ public class Api {
                 });
                 get("/apidb", ctx -> {
                     log.info("incoming request");
-                    ctx.result("Hello, hello " + getArrangementById(1));
+                    ctx.result("Hello, hello " );
                 });
             });
 
