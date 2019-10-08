@@ -24,7 +24,6 @@ public class ImportKondisData {
     private static Sql2o sql2o;
 
 
-
     @Test
     public void importData() {
 
@@ -153,7 +152,7 @@ public class ImportKondisData {
             try (Connection con = sql2o.open()) {
 
                 arrangements.forEach((arr) -> {
-                    UUID arrId =  UUID.randomUUID();
+                    UUID arrId = UUID.randomUUID();
                     con.createQuery(arrangementSql)
                             .addParameter("arrangement_idParam", arrId)
                             .addParameter("overskriftParam", arr.getOverskrift())
@@ -196,23 +195,23 @@ public class ImportKondisData {
 
                     kontaktpersonList.forEach((person) -> {
 
-                            con.createQuery(kontaktpersonSql)
-                                .addParameter("kontaktperson_idParam",  UUID.randomUUID())
+                        con.createQuery(kontaktpersonSql)
+                                .addParameter("kontaktperson_idParam", UUID.randomUUID())
                                 .addParameter("arrangement_idParam", arrId)
                                 .addParameter("navnParam", person.getKontaktperson_navn())
                                 .addParameter("telefonParam", person.getKontaktperson_mobil())
                                 .addParameter("mobilParam", person.getKontaktperson_mobil())
                                 .addParameter("epostParam", person.getKontaktperson_epost())
-                                    .executeUpdate();
+                                .executeUpdate();
 
-                        });
+                    });
                     distanseList.forEach((distanse -> {
                         con.createQuery(distanseSql)
-                                .addParameter("distanse_idParam",  UUID.randomUUID())
+                                .addParameter("distanse_idParam", UUID.randomUUID())
                                 .addParameter("arrangement_idParam", arrId)
                                 .addParameter("distanse_lengdeParam", distanse.getDistanse_lengde())
                                 .addParameter("distanse_starttidParam", distanse.getDistanse_starttid())
-                                .addParameter("distanse_startkontingentParam" , distanse.getDistanse_startkontingent())
+                                .addParameter("distanse_startkontingentParam", distanse.getDistanse_startkontingent())
                                 .addParameter("distanse_fullforte_aaret_forParam", distanse.getDistanse_fullførte_året_før())
                                 .addParameter("distanse_barnelopParam", distanse.getDistanse_barneløp())
                                 .addParameter("distanse_stafettParam", distanse.getDistanse_stafett())

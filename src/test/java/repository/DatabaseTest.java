@@ -25,7 +25,7 @@ public class DatabaseTest {
     private static Sql2o sql2o;
 
     @Test
-    public void getArrangementFraId() throws IOException {
+    public void getArrangementFraOverskrift() throws IOException {
 
         HikariDataSource hikariDataSource = createDataSource();
         sql2o = new Sql2o(hikariDataSource);
@@ -36,11 +36,27 @@ public class DatabaseTest {
         String arrangementFromFile = Resources.toString(resource, Charsets.UTF_8);
         String overskrift = "Grisebakken Opp Lørdag 21. september 2019 ";
 
-        List<Arrangement> result = database.getArrangementsFraNavn(sql2o,overskrift);
+        List<Arrangement> result = database.getArrangementsFraNavn(sql2o, overskrift);
 
         Assert.assertEquals(gson.toJson(result.get(0)), arrangementFromFile);
     }
 
+    @Test
+    public void getArrangementFraFylke() throws IOException {
+
+        HikariDataSource hikariDataSource = createDataSource();
+        sql2o = new Sql2o(hikariDataSource);
+        Gson gson = new Gson();
+        Database database = new Database();
+
+        URL resource = getResource("arrangement.json");
+        String arrangementFromFile = Resources.toString(resource, Charsets.UTF_8);
+        String fylke = "Oslo";
+
+        List<Arrangement> result = database.getArrangementsIFylke(sql2o, fylke);
+
+        Assert.assertEquals(gson.toJson(result.get(0)), arrangementFromFile);
+    }
 
 
     @NotNull

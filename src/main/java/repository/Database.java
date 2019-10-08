@@ -16,9 +16,9 @@ public class Database {
     private static final Logger log = LoggerFactory.getLogger(Database.class);
 
 
-    protected List<Arrangement> getArrangementsFraNavn(Sql2o sql2o, String oversrkift) {
-        String selectSQL = "Select * from ARRANGEMENT where overskrift = :overskrift";
-        List<Arrangement>  result;
+    public List<Arrangement> getArrangementsFraNavn(Sql2o sql2o, String oversrkift) {
+        String selectSQL = "SELECT * FROM arrangement WHERE overskrift = :overskrift";
+        List<Arrangement> result;
 
         try (Connection con = sql2o.open()) {
 
@@ -29,8 +29,18 @@ public class Database {
         return result;
     }
 
+    public List<Arrangement> getArrangementsIFylke(Sql2o sql2o, String fylke) {
+        String selectSQL = "SELECT * FROM arrangement WHERE fylke = :fylke";
+        List<Arrangement> result;
 
+        try (Connection con = sql2o.open()) {
 
+            result = con.createQuery(selectSQL)
+                    .addParameter("fylke", fylke)
+                    .executeAndFetch(Arrangement.class);
+        }
+        return result;
+    }
 
 
 }
