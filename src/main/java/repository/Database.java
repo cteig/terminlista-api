@@ -43,4 +43,15 @@ public class Database {
     }
 
 
+    public List<Arrangement> getAlleArrangementer(Sql2o sql2o) {
+        String selectSQL = "SELECT * FROM arrangement";
+        List<Arrangement> result;
+
+        try (Connection con = sql2o.open()) {
+
+            result = con.createQuery(selectSQL)
+                    .executeAndFetch(Arrangement.class);
+        }
+        return result;
+    }
 }

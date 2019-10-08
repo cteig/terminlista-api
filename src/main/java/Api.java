@@ -39,22 +39,31 @@ public class Api {
         app.routes(() -> {
             get("/hello", ctx -> ctx.result("Hello World"));
             path("/api", () -> {
-                get("/arrangementer", ctx -> ctx.result("Hent alle arrangementer"));
+                get("/arrangementer", ctx -> {
+                    log.info("Henter alle arrangementer");
+                    ctx.result("Arrangementer" + getAlleArrangementer());
+                });
                 path("/arrangement", () -> {
-                    log.info("incoming request");
                     get("/navn", ctx -> {
                         log.info("Henter arrangementinfo");
                         String overskrift = "Grisebakken Opp Lørdag 21. september 2019 ";
-                        ctx.result("Hello, hello " + getArrangementFraNavn(overskrift));
+                        ctx.result("Arrangement" + getArrangementFraNavn(overskrift));
                     });
                     get("/fylke", ctx -> {
                         log.info("Henter arrangementinfo i et fylke");
                         String fylke = "Oslo ";
-                        ctx.result("Hello, hello " + getArrangementIFylke(fylke));
+                        ctx.result("Arrangementer" + getArrangementIFylke(fylke));
                     });
                 });
             });
         });
+    }
+
+    private static String getAlleArrangementer() {
+        Gson gson = new Gson();
+        Database database = new Database();
+        java.util.List<Arrangement> arrangementer = database.getAlleArrangementer(sql2o);
+        return gson.toJson(arrangementer);
     }
 
     public static String getArrangementFraNavn(String overskrift) {
