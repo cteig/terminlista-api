@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cd elm
-elm-app build
+#elm-app build
 cd ..
-cp -r elm/build/* target/classes/static
+#cp -r elm/build/* target/classes/static

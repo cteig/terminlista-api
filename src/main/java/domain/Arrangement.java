@@ -4,12 +4,13 @@ import java.util.List;
 
 public class Arrangement {
 
+    private String arrangement_id;
     private String overskrift;
     private String arrangør;
     private String arrangert;
     private String adresse;
     private String postnr;
-    private String posted;
+    private String poststed;
     private String land;
     private String fylke;
     private String kommune;
@@ -23,9 +24,9 @@ public class Arrangement {
     private String etteranmeldingsgebyr;
     private String kontonummer;
     private String påmelding;
-    private String påmelding_adresse;
+    private String påmelding_postadresse;
     private String påmelding_postnr;
-    private String påmelding_posted;
+    private String påmelding_poststed;
     private String kvinneløp;
     private String motbakkeløp;
     private String nfif_lisens;
@@ -80,12 +81,20 @@ public class Arrangement {
         this.postnr = postnr;
     }
 
-    public String getPosted() {
-        return posted;
+    public String getArrangementId() {
+        return arrangement_id;
     }
 
-    public void setPosted(String posted) {
-        this.posted = posted;
+    public void setArrangementId(String arrangement_id) {
+        this.arrangement_id = arrangement_id;
+    }
+
+    public String getPoststed() {
+        return poststed;
+    }
+
+    public void setPoststed(String poststed) {
+        this.poststed = poststed;
     }
 
     public String getLand() {
@@ -184,6 +193,14 @@ public class Arrangement {
         this.kontonummer = kontonummer;
     }
 
+    public String getArrangement_id() {
+        return arrangement_id;
+    }
+
+    public void setArrangement_id(String arrangement_id) {
+        this.arrangement_id = arrangement_id;
+    }
+
     public String getPåmelding() {
         return påmelding;
     }
@@ -192,12 +209,12 @@ public class Arrangement {
         this.påmelding = påmelding;
     }
 
-    public String getPåmelding_adresse() {
-        return påmelding_adresse;
+    public String getPåmelding_postadresse() {
+        return påmelding_postadresse;
     }
 
-    public void setPåmelding_adresse(String påmelding_adresse) {
-        this.påmelding_adresse = påmelding_adresse;
+    public void setPåmelding_postadresse(String påmelding_postadresse) {
+        this.påmelding_postadresse = påmelding_postadresse;
     }
 
     public String getPåmelding_postnr() {
@@ -208,12 +225,12 @@ public class Arrangement {
         this.påmelding_postnr = påmelding_postnr;
     }
 
-    public String getPåmelding_posted() {
-        return påmelding_posted;
+    public String getPåmelding_poststed() {
+        return påmelding_poststed;
     }
 
-    public void setPåmelding_posted(String påmelding_posted) {
-        this.påmelding_posted = påmelding_posted;
+    public void setPåmelding_poststed(String påmelding_poststed) {
+        this.påmelding_poststed = påmelding_poststed;
     }
 
     public String getKvinneløp() {
@@ -323,12 +340,13 @@ public class Arrangement {
     @Override
     public String toString() {
         return "Arrangement{" +
-                "overskrift='" + overskrift + '\'' +
+                "arrangement_id='" + arrangement_id + '\'' +
+                ", overskrift='" + overskrift + '\'' +
                 ", arrangør='" + arrangør + '\'' +
                 ", arrangert='" + arrangert + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", postnr='" + postnr + '\'' +
-                ", posted='" + posted + '\'' +
+                ", poststed='" + poststed + '\'' +
                 ", land='" + land + '\'' +
                 ", fylke='" + fylke + '\'' +
                 ", kommune='" + kommune + '\'' +
@@ -342,9 +360,9 @@ public class Arrangement {
                 ", etteranmeldingsgebyr='" + etteranmeldingsgebyr + '\'' +
                 ", kontonummer='" + kontonummer + '\'' +
                 ", påmelding='" + påmelding + '\'' +
-                ", påmelding_adresse='" + påmelding_adresse + '\'' +
+                ", påmelding_postadresse='" + påmelding_postadresse + '\'' +
                 ", påmelding_postnr='" + påmelding_postnr + '\'' +
-                ", påmelding_posted='" + påmelding_posted + '\'' +
+                ", påmelding_poststed='" + påmelding_poststed + '\'' +
                 ", kvinneløp='" + kvinneløp + '\'' +
                 ", motbakkeløp='" + motbakkeløp + '\'' +
                 ", nfif_lisens='" + nfif_lisens + '\'' +

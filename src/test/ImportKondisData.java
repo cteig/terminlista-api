@@ -5,11 +5,12 @@ import domain.Arrangementer;
 import domain.Distanse;
 import domain.Kontaktperson;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import repository.HikariHelper;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,8 +23,10 @@ public class ImportKondisData {
 
     private static Sql2o sql2o;
 
+
+
     @Test
-    protected void importData() {
+    public void importData() {
 
         HikariDataSource hikariDataSource = createDataSource();
         sql2o = new Sql2o(hikariDataSource);
@@ -158,7 +161,7 @@ public class ImportKondisData {
                             .addParameter("arrangertParam", arr.getArrangert())
                             .addParameter("adresseParam", arr.getAdresse())
                             .addParameter("postnrParam", arr.getPostnr())
-                            .addParameter("poststedParam", arr.getPosted())
+                            .addParameter("poststedParam", arr.getPoststed())
                             .addParameter("landParam", arr.getLand())
                             .addParameter("fylkeParam", arr.getFylke())
                             .addParameter("kommuneParam", arr.getKommune())
@@ -171,9 +174,9 @@ public class ImportKondisData {
                             .addParameter("etteranmeldingsgebyrParam", arr.getEtteranmeldingsgebyr())
                             .addParameter("kontonummerParam", arr.getKontonummer())
                             .addParameter("påmeldingParam", arr.getPåmelding())
-                            .addParameter("påmelding_postadresseParam", arr.getPåmelding_adresse())
+                            .addParameter("påmelding_postadresseParam", arr.getPåmelding_postadresse())
                             .addParameter("påmelding_postnrParam", arr.getPåmelding_postnr())
-                            .addParameter("påmelding_poststedParam", arr.getPåmelding_posted())
+                            .addParameter("påmelding_poststedParam", arr.getPåmelding_poststed())
                             .addParameter("kvinneløpParam", arr.getKvinneløp())
                             .addParameter("motbakkeløpParam", arr.getMotbakkeløp())
                             .addParameter("nfif_liseøænsParam", arr.getNfif_lisens())

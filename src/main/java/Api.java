@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import repository.HikariHelper;
 
-import static io.javalin.apibuilder.ApiBuilder.*;
+import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class Api {
     private static int CORALOGIX_COMPANY = 6804;
@@ -35,15 +37,13 @@ public class Api {
         app.routes(() -> {
             get("/hello", ctx -> ctx.result("Hello World"));
             path("/api", () -> {
-                get("/test", ctx -> ctx.result("Hello World Test"));
-                post("/save", ctx -> {
-                    log.info("save to database");
-                    //saveKondisData();
-                });
-                get("/apidb", ctx -> {
+                get("/arrangementer", ctx -> ctx.result("Hent alle arrangementer"));
+                path("/arrangement", () -> {
                     log.info("incoming request");
-                    ctx.result("Hello, hello " );
+                    get(":id", ctx -> ctx.result("Hent arrangement"));
+                    get("/fylke", ctx -> ctx.result("Hent arrangement i fylke " ));
                 });
+
             });
 
         });
