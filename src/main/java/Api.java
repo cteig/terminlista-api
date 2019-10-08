@@ -102,15 +102,6 @@ public class Api {
         );
     }
 
-/*    @NotNull
-    private static HikariDataSource createDataSource() {
-        return HikariHelper.createDataSource(
-                System.getenv("DATABASE_URL"),
-                System.getenv("DATABASE_USER"),
-                System.getenv("DATABASE_PASSWORD")
-        );
-    }*/
-
     @NotNull
     private static HikariDataSource createDataSource() {
         return HikariHelper.createDataSource(
