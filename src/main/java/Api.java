@@ -11,7 +11,6 @@ import io.vavr.control.Option;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sql2o.Sql2o;
 import repository.Database;
 import repository.HikariHelper;
 
@@ -23,15 +22,12 @@ public class Api {
     private static String CORALOGIX_SUBSYSTEM_NAME = "backend";
 
     private static final Logger log = LoggerFactory.getLogger(Api.class);
-
-    private static Sql2o sql2o;
+    private static HikariDataSource hikariDataSource = createDataSource();
 
     public static void main(String[] args) {
         initLogging();
         log.info("Starting");
-        HikariDataSource hikariDataSource = createDataSource();
 
-        sql2o = new Sql2o(hikariDataSource);
         Javalin app = Javalin.create()
                 .enableStaticFiles("/static")
                 .start(5000);
@@ -61,22 +57,22 @@ public class Api {
 
     private static String getAlleArrangementer() {
         Gson gson = new Gson();
-        Database database = new Database();
-        java.util.List<Arrangement> arrangementer = database.getAlleArrangementer(sql2o);
+        Database database = new Database(hikariDataSource);
+        java.util.List<Arrangement> arrangementer = database.getAlleArrangementer();
         return gson.toJson(arrangementer);
     }
 
     public static String getArrangementFraNavn(String overskrift) {
         Gson gson = new Gson();
-        Database database = new Database();
-        java.util.List<Arrangement> arrangementer = database.getArrangementsFraNavn(sql2o, overskrift);
+        Database database = new Database(hikariDataSource);
+        java.util.List<Arrangement> arrangementer = database.getArrangementsFraNavn(overskrift);
         return gson.toJson(arrangementer.get(0));
     }
 
     public static String getArrangementIFylke(String fylke) {
         Gson gson = new Gson();
-        Database database = new Database();
-        java.util.List<Arrangement> arrangementer = database.getArrangementsIFylke(sql2o, fylke);
+        Database database = new Database(hikariDataSource);
+        java.util.List<Arrangement> arrangementer = database.getArrangementsIFylke(fylke);
         return gson.toJson(arrangementer);
     }
 
