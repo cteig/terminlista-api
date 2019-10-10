@@ -8,9 +8,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import javax.sql.DataSource;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -67,21 +65,18 @@ public class Database {
         return result;
     }
 
-    public List<Arrangement> getArrangementerFraTilDato(Instant sinceInstant) {
+    public List<Arrangement> getArrangementerFraTilDato(LocalDate fra) {
 
-        System.out.println("sinceInstant = " + sinceInstant);
+        System.out.println("sinceInstant = " + fra);
         Sql2o sql2o = new Sql2o(dataSource);
-        String selectSQL = "SELECT * FROM arrangement WHERE dato >= :sinceInstant";
+        String selectSQL = "SELECT * FROM arrangement WHERE dato >= :fra";
         List<Arrangement> result;
-        Date myDate = Date.from(sinceInstant);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy HH:mm:ss");
-        String formattedDate = formatter.format(myDate);
-        System.out.println("formattedDate = " + formattedDate);
+
 
         try (Connection con = sql2o.open()) {
 
             result = con.createQuery(selectSQL)
-                    .addParameter("sinceInstant", sinceInstant.toString())
+                    .addParameter("fra", fra)
                     .executeAndFetch(Arrangement.class);
         }
         return result;

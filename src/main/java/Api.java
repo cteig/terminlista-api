@@ -8,14 +8,13 @@ import io.javalin.Javalin;
 import io.vavr.Tuple;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
-import io.vavr.control.Try;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.Database;
 import repository.HikariHelper;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -53,21 +52,22 @@ public class Api {
                         String fylke = "Oslo ";
                         ctx.result("Arrangementer" + getArrangementIFylke(fylke));
                     });
-                });
-                path("/dato", () -> {
-                    get(":fra", ctx -> {
-                        String since = "2019-01-01T06:00:00.00Z";
-                        final Try<Instant> parseAttempt = Try.of(() -> Instant.parse(since));
-                        final Instant sinceInstant = parseAttempt.get();
-                        log.info("Henter arrangementinfo fra dato");
-                        ctx.result("Arrangement" + getArrangementFraTilDato(sinceInstant));
+                    path("/dato", () -> {
+                        get(":fra", ctx -> {
+                            String fra = "2020-03-07";
+                            LocalDate localDate = LocalDate.parse(fra);
+
+                            log.info("Henter arrangementinfo fra dato");
+                            ctx.result("Arrangement" + getArrangementFraTilDato(localDate));
+                        });
                     });
                 });
+
             });
         });
     }
 
-    private static String getArrangementFraTilDato(Instant sinceInstant) {
+    private static String getArrangementFraTilDato(LocalDate sinceInstant) {
         Gson gson = new Gson();
         Database database = new Database(hikariDataSource);
         java.util.List<Arrangement> arrangementer = database.getArrangementerFraTilDato(sinceInstant);

@@ -1,7 +1,6 @@
 package repository;
 
 import domain.Arrangement;
-import io.vavr.control.Try;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.sql2o.Sql2o;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.text.ParseException;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -48,13 +46,12 @@ public class DatabaseTest {
     @Test
     public void getArrangementFraTilDato() {
 
-        String since = "2019-01-01T06:00:00.00Z";
-        final Try<Instant> parseAttempt = Try.of(() -> Instant.parse(since));
-        final Instant sinceInstant = parseAttempt.get();
+        String fra = "2020-03-07";
+        LocalDate localDateFra = LocalDate.parse(fra);
 
         Database database = new Database(dataSource);
 
-        List<Arrangement> arrangementerFraTilDato = database.getArrangementerFraTilDato(sinceInstant);
+        List<Arrangement> arrangementerFraTilDato = database.getArrangementerFraTilDato(localDateFra);
 
         System.out.println("arrangementerFraTilDato = " + arrangementerFraTilDato);
     }
