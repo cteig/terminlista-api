@@ -1,6 +1,7 @@
 package repository;
 
 import domain.Arrangement;
+import io.vavr.control.Try;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
@@ -10,7 +11,14 @@ import org.sql2o.Sql2o;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class DatabaseTest {
@@ -36,6 +44,37 @@ public class DatabaseTest {
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void getArrangementFraTilDato() {
+
+        String since = "2019-01-01T06:00:00.00Z";
+        final Try<Instant> parseAttempt = Try.of(() -> Instant.parse(since));
+        final Instant sinceInstant = parseAttempt.get();
+
+        Database database = new Database(dataSource);
+
+        List<Arrangement> arrangementerFraTilDato = database.getArrangementerFraTilDato(sinceInstant);
+
+        System.out.println("arrangementerFraTilDato = " + arrangementerFraTilDato);
+    }
+
+    @Test
+    public void hentDatoFraKondis() throws ParseException {
+        String datoStreng = " Fredag 17. april 2020";
+        String[] splitStr = datoStreng.trim().split("\\s+",2);
+
+        System.out.println("SPLIT = " + splitStr[1]);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+                .withLocale(new Locale("no", "NO"));
+
+        TemporalAccessor temporalAccessor = dateTimeFormatter.parse(splitStr[1]);
+
+        LocalDate from = LocalDate.from(temporalAccessor);
+
+        System.out.println("from = " + from);
+    }
 
     @Test
     public void getArrangementFraOverskrift() throws IOException {

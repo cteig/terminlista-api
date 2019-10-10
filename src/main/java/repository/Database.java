@@ -8,6 +8,9 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import javax.sql.DataSource;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class Database {
     private static final Logger log = LoggerFactory.getLogger(Database.class);
 
 
-    public List<Arrangement> getArrangementsFraNavn(String oversrkift) {
+    public List<Arrangement> getArrangementsFraNavn(String overskrift) {
         Sql2o sql2o = new Sql2o(dataSource);
         String selectSQL = "SELECT * FROM arrangement WHERE overskrift = :overskrift";
         List<Arrangement> result;
@@ -30,7 +33,7 @@ public class Database {
         try (Connection con = sql2o.open()) {
 
             result = con.createQuery(selectSQL)
-                    .addParameter("overskrift", oversrkift)
+                    .addParameter("overskrift", overskrift)
                     .executeAndFetch(Arrangement.class);
         }
         return result;
@@ -59,6 +62,26 @@ public class Database {
         try (Connection con = sql2o.open()) {
 
             result = con.createQuery(selectSQL)
+                    .executeAndFetch(Arrangement.class);
+        }
+        return result;
+    }
+
+    public List<Arrangement> getArrangementerFraTilDato(Instant sinceInstant) {
+
+        System.out.println("sinceInstant = " + sinceInstant);
+        Sql2o sql2o = new Sql2o(dataSource);
+        String selectSQL = "SELECT * FROM arrangement WHERE dato >= :sinceInstant";
+        List<Arrangement> result;
+        Date myDate = Date.from(sinceInstant);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy HH:mm:ss");
+        String formattedDate = formatter.format(myDate);
+        System.out.println("formattedDate = " + formattedDate);
+
+        try (Connection con = sql2o.open()) {
+
+            result = con.createQuery(selectSQL)
+                    .addParameter("sinceInstant", sinceInstant.toString())
                     .executeAndFetch(Arrangement.class);
         }
         return result;

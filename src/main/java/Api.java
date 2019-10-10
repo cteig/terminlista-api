@@ -8,11 +8,14 @@ import io.javalin.Javalin;
 import io.vavr.Tuple;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
+import io.vavr.control.Try;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.Database;
 import repository.HikariHelper;
+
+import java.time.Instant;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -51,8 +54,24 @@ public class Api {
                         ctx.result("Arrangementer" + getArrangementIFylke(fylke));
                     });
                 });
+                path("/dato", () -> {
+                    get(":fra", ctx -> {
+                        String since = "2019-01-01T06:00:00.00Z";
+                        final Try<Instant> parseAttempt = Try.of(() -> Instant.parse(since));
+                        final Instant sinceInstant = parseAttempt.get();
+                        log.info("Henter arrangementinfo fra dato");
+                        ctx.result("Arrangement" + getArrangementFraTilDato(sinceInstant));
+                    });
+                });
             });
         });
+    }
+
+    private static String getArrangementFraTilDato(Instant sinceInstant) {
+        Gson gson = new Gson();
+        Database database = new Database(hikariDataSource);
+        java.util.List<Arrangement> arrangementer = database.getArrangementerFraTilDato(sinceInstant);
+        return gson.toJson(arrangementer);
     }
 
     private static String getAlleArrangementer() {

@@ -15,6 +15,10 @@ import repository.HikariHelper;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ImportKondisData {
@@ -30,8 +34,10 @@ public class ImportKondisData {
         HikariDataSource hikariDataSource = createDataSource();
         sql2o = new Sql2o(hikariDataSource);
         Gson gson = new Gson();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+                .withLocale(new Locale("no", "NO"));
 
-        try (Reader reader = new FileReader("/Users/christineteig/repos/ctekk/spike/javalin-test/resources/details.json")) {
+        try (Reader reader = new FileReader("/Users/christineteig/repos/terminlista/terminlista-api/resources/details.json")) {
 
             // Convert JSON File to Java Object
             Arrangementer arrangementer = gson.fromJson(reader, Arrangementer.class);
@@ -48,6 +54,7 @@ public class ImportKondisData {
                     "land," +
                     "fylke," +
                     "kommune," +
+                    "ukedag," +
                     "dato," +
                     "start," +
                     "kart," +
@@ -83,6 +90,7 @@ public class ImportKondisData {
                     ":landParam," +
                     ":fylkeParam," +
                     ":kommuneParam," +
+                    ":ukedagParam," +
                     ":datoParam," +
                     ":startParam," +
                     ":kartParam," +
@@ -152,7 +160,14 @@ public class ImportKondisData {
             try (Connection con = sql2o.open()) {
 
                 arrangements.forEach((arr) -> {
+                    String[] splitDato = null;
+                    LocalDate dato = null;
                     UUID arrId = UUID.randomUUID();
+                    if (arr.getDato() != "" && arr.getDato() != null) {
+                        splitDato = arr.getDato().trim().split("\\s+", 2);
+                        dato = LocalDate.from(dateTimeFormatter.parse(splitDato[1]));
+
+                    }
                     con.createQuery(arrangementSql)
                             .addParameter("arrangement_idParam", arrId)
                             .addParameter("overskriftParam", arr.getOverskrift())
@@ -164,7 +179,8 @@ public class ImportKondisData {
                             .addParameter("landParam", arr.getLand())
                             .addParameter("fylkeParam", arr.getFylke())
                             .addParameter("kommuneParam", arr.getKommune())
-                            .addParameter("datoParam", arr.getDato())
+                            .addParameter("ukedagParam", splitDato[0])
+                            .addParameter("datoParam", dato)
                             .addParameter("startParam", arr.getStart())
                             .addParameter("kartParam", arr.getKart())
                             .addParameter("målParam", arr.getMål())
