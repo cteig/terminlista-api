@@ -14,6 +14,7 @@ public class Arrangement {
     private String land;
     private String fylke;
     private String kommune;
+    private String ukedag;
     private String dato;
     private List<Kontaktperson> kontaktpersonList;
     private String start;
@@ -119,6 +120,14 @@ public class Arrangement {
 
     public void setKommune(String kommune) {
         this.kommune = kommune;
+    }
+
+    public String getUkedag() {
+        return ukedag;
+    }
+
+    public void setUkedag(String ukedag) {
+        this.ukedag = ukedag;
     }
 
     public String getDato() {
