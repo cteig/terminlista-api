@@ -177,7 +177,7 @@ public class ImportKondisData {
                             .addParameter("postnrParam", arr.getPostnr())
                             .addParameter("poststedParam", arr.getPoststed())
                             .addParameter("landParam", arr.getLand())
-                            .addParameter("fylkeParam", arr.getFylke())
+                            .addParameter("fylkeParam", arr.getFylke().trim().toLowerCase())
                             .addParameter("kommuneParam", arr.getKommune())
                             .addParameter("ukedagParam", splitDato[0])
                             .addParameter("datoParam", dato)

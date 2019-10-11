@@ -94,7 +94,6 @@ public class Database {
 
     public List<Arrangement> getArrangementerFraTilDato(LocalDate fra) {
 
-        System.out.println("sinceInstant = " + fra);
         Sql2o sql2o = new Sql2o(dataSource);
         String selectSQL = "SELECT * FROM arrangement WHERE dato >= :fra";
         List<Arrangement> result;

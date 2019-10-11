@@ -47,15 +47,18 @@ public class Api {
                         String overskrift = "Grisebakken Opp Lørdag 21. september 2019 ";
                         ctx.result("Arrangement" + getArrangementFraNavn(overskrift));
                     });
-                    get("/fylke", ctx -> {
-                        log.info("Henter arrangementinfo i et fylke");
-                        String fylke = "Oslo ";
-                        ctx.result("Arrangementer" + getArrangementIFylke(fylke));
+                    path("/fylke", () -> {
+                        get(":fylke", ctx -> {
+                            String fylkeStreng = ctx.pathParam(":fylke");
+                            System.out.println("fylkeStreng = " + fylkeStreng);
+                            log.info("Henter arrangementinfo i et fylke");
+                            ctx.result("Arrangementer" + getArrangementIFylke(fylkeStreng.toLowerCase()));
+                        });
                     });
                     path("/dato", () -> {
-                        get(":fra", ctx -> {
-                            String fra = "2020-03-07";
-                            LocalDate localDate = LocalDate.parse(fra);
+                        get(":from", ctx -> {
+                            String fraDatoStreng = ctx.pathParam(":from");
+                            LocalDate localDate = LocalDate.parse(fraDatoStreng);
 
                             log.info("Henter arrangementinfo fra dato");
                             ctx.result("Arrangement" + getArrangementFraTilDato(localDate));
