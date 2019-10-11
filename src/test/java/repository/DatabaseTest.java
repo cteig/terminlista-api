@@ -50,6 +50,7 @@ public class DatabaseTest {
         LocalDate localDateFra = LocalDate.parse(fra);
 
         Database database = new Database(dataSource);
+        insertTestArrangement();
 
         List<Arrangement> arrangementerFraTilDato = database.getArrangementerFraTilDato(localDateFra);
 
@@ -100,6 +101,19 @@ public class DatabaseTest {
         List<Arrangement> result = database.getArrangementsIFylke(fylke);
 
         Assert.assertEquals("Oslo Maraton", result.get(0).getOverskrift());
+        Assert.assertTrue(result.get(0).getDistanseList().size()==2);
+    }
+
+    @Test
+    public void getAllArrangement() throws IOException {
+
+        Database database = new Database(dataSource);
+        insertTestArrangement();
+
+        List<Arrangement> result = database.getAlleArrangementer();
+
+        Assert.assertEquals("Oslo Maraton", result.get(0).getOverskrift());
+        Assert.assertTrue(result.get(0).getDistanseList().size()==2);
     }
 
     private void insertTestArrangement() {

@@ -32,11 +32,6 @@ public class Database {
         String selectArrangementSQL = "SELECT * FROM arrangement " +
                 "WHERE overskrift = :overskrift";
 
-        String selectDistanseSQL = "SELECT * FROM distanse " +
-                "WHERE arrangement_id = :arrangement_id";
-
-        String selectKontaktSQL = "SELECT * FROM kontaktperson " +
-                "WHERE arrangement_id = :arrangement_id";
 
         try (Connection con = sql2o.open()) {
 
@@ -45,17 +40,9 @@ public class Database {
                     .executeAndFetch(Arrangement.class);
 
             result.forEach((arrangement) -> {
-                System.out.println("arrangement = " + arrangement);
-                List<Distanse> distanseList = con.createQuery(selectDistanseSQL)
-                        .addParameter("arrangement_id", arrangement.getArrangementId())
-                        .executeAndFetch(Distanse.class);
 
-                List<Kontaktperson> kontaktpersonList = con.createQuery(selectKontaktSQL)
-                        .addParameter("arrangement_id", arrangement.getArrangementId())
-                        .executeAndFetch(Kontaktperson.class);
-
-                arrangement.setDistanseList(distanseList);
-                arrangement.setKontaktpersonList(kontaktpersonList);
+                arrangement.setDistanseList(getDistanseForArrangement(con, arrangement));
+                arrangement.setKontaktpersonList(getKontaktpersonForArrangement(con, arrangement));
 
             });
         }
@@ -64,7 +51,9 @@ public class Database {
 
     public List<Arrangement> getArrangementsIFylke(String fylke) {
         Sql2o sql2o = new Sql2o(dataSource);
-        String selectSQL = "SELECT * FROM arrangement WHERE fylke = :fylke";
+        String selectSQL = "SELECT * FROM arrangement" +
+                " WHERE fylke = :fylke";
+
         List<Arrangement> result;
 
         try (Connection con = sql2o.open()) {
@@ -72,10 +61,16 @@ public class Database {
             result = con.createQuery(selectSQL)
                     .addParameter("fylke", fylke)
                     .executeAndFetch(Arrangement.class);
+
+            result.forEach((arrangement) -> {
+
+                arrangement.setDistanseList(getDistanseForArrangement(con, arrangement));
+                arrangement.setKontaktpersonList(getKontaktpersonForArrangement(con, arrangement));
+
+            });
         }
         return result;
     }
-
 
     public List<Arrangement> getAlleArrangementer() {
         Sql2o sql2o = new Sql2o(dataSource);
@@ -86,6 +81,13 @@ public class Database {
 
             result = con.createQuery(selectSQL)
                     .executeAndFetch(Arrangement.class);
+
+            result.forEach((arrangement) -> {
+
+                arrangement.setDistanseList(getDistanseForArrangement(con, arrangement));
+                arrangement.setKontaktpersonList(getKontaktpersonForArrangement(con, arrangement));
+
+            });
         }
         return result;
     }
@@ -106,4 +108,26 @@ public class Database {
         }
         return result;
     }
+
+    private List<Distanse> getDistanseForArrangement(Connection con, Arrangement arrangement) {
+
+        String selectDistanseSQL = "SELECT * FROM distanse " +
+                "WHERE arrangement_id = :arrangement_id";
+
+        return con.createQuery(selectDistanseSQL)
+                .addParameter("arrangement_id", arrangement.getArrangementId())
+                .executeAndFetch(Distanse.class);
+    }
+
+    private List<Kontaktperson> getKontaktpersonForArrangement(Connection con, Arrangement arrangement) {
+
+        String selectKontaktSQL = "SELECT * FROM kontaktperson " +
+                "WHERE arrangement_id = :arrangement_id";
+
+        return con.createQuery(selectKontaktSQL)
+                .addParameter("arrangement_id", arrangement.getArrangementId())
+                .executeAndFetch(Kontaktperson.class);
+    }
+
+
 }
