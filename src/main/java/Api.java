@@ -39,20 +39,20 @@ public class Api {
             path("/api", () -> {
                 get("/arrangementer", ctx -> {
                     log.info("Henter alle arrangementer");
-                    ctx.result("Arrangementer" + getAlleArrangementer());
+                    ctx.result(getAlleArrangementer());
                 });
                 path("/arrangement", () -> {
                     get("/navn", ctx -> {
                         log.info("Henter arrangementinfo");
                         String overskrift = "Grisebakken Opp Lørdag 21. september 2019 ";
-                        ctx.result("Arrangement" + getArrangementFraNavn(overskrift));
+                        ctx.result(getArrangementFraNavn(overskrift));
                     });
                     path("/fylke", () -> {
                         get(":fylke", ctx -> {
                             String fylkeStreng = ctx.pathParam(":fylke");
                             System.out.println("fylkeStreng = " + fylkeStreng);
                             log.info("Henter arrangementinfo i et fylke");
-                            ctx.result("Arrangementer" + getArrangementIFylke(fylkeStreng.toLowerCase()));
+                            ctx.result(getArrangementIFylke(fylkeStreng.toLowerCase()));
                         });
                     });
                     path("/dato", () -> {
@@ -61,7 +61,7 @@ public class Api {
                             LocalDate localDate = LocalDate.parse(fraDatoStreng);
 
                             log.info("Henter arrangementinfo fra dato");
-                            ctx.result("Arrangement" + getArrangementFraTilDato(localDate));
+                            ctx.result(getArrangementFraTilDato(localDate));
                         });
                     });
                 });
@@ -74,28 +74,28 @@ public class Api {
         Gson gson = new Gson();
         Database database = new Database(hikariDataSource);
         java.util.List<Arrangement> arrangementer = database.getArrangementerFraTilDato(sinceInstant);
-        return gson.toJson(arrangementer);
+        return "{ \"arrangements\":" + gson.toJson(arrangementer) + "}";
     }
 
     private static String getAlleArrangementer() {
         Gson gson = new Gson();
         Database database = new Database(hikariDataSource);
         java.util.List<Arrangement> arrangementer = database.getAlleArrangementer();
-        return gson.toJson(arrangementer);
+        return "{ \"arrangements\":" + gson.toJson(arrangementer) + "}";
     }
 
     public static String getArrangementFraNavn(String overskrift) {
         Gson gson = new Gson();
         Database database = new Database(hikariDataSource);
         java.util.List<Arrangement> arrangementer = database.getArrangementsFraNavn(overskrift);
-        return gson.toJson(arrangementer.get(0));
+        return "{ \"arrangements\":" + gson.toJson(arrangementer.get(0)) + "}";
     }
 
     public static String getArrangementIFylke(String fylke) {
         Gson gson = new Gson();
         Database database = new Database(hikariDataSource);
         java.util.List<Arrangement> arrangementer = database.getArrangementsIFylke(fylke);
-        return gson.toJson(arrangementer);
+        return "{ \"arrangements\":" + gson.toJson(arrangementer) + "}";
     }
 
     private static void initLogging() {
