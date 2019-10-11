@@ -1,10 +1,11 @@
 package domain;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Arrangement {
 
-    private String arrangement_id;
+    private UUID arrangement_id;
     private String overskrift;
     private String arrangør;
     private String arrangert;
@@ -82,11 +83,11 @@ public class Arrangement {
         this.postnr = postnr;
     }
 
-    public String getArrangementId() {
+    public UUID getArrangementId() {
         return arrangement_id;
     }
 
-    public void setArrangementId(String arrangement_id) {
+    public void setArrangementId(UUID arrangement_id) {
         this.arrangement_id = arrangement_id;
     }
 
@@ -200,14 +201,6 @@ public class Arrangement {
 
     public void setKontonummer(String kontonummer) {
         this.kontonummer = kontonummer;
-    }
-
-    public String getArrangement_id() {
-        return arrangement_id;
-    }
-
-    public void setArrangement_id(String arrangement_id) {
-        this.arrangement_id = arrangement_id;
     }
 
     public String getPåmelding() {

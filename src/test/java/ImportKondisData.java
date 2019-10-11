@@ -37,7 +37,7 @@ public class ImportKondisData {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
                 .withLocale(new Locale("no", "NO"));
 
-        try (Reader reader = new FileReader("/Users/christineteig/repos/terminlista/terminlista-api/resources/details.json")) {
+        try (Reader reader = new FileReader("/Users/christineteig/repos/terminlista/terminlista-api/resources/detailsall.json")) {
 
             // Convert JSON File to Java Object
             Arrangementer arrangementer = gson.fromJson(reader, Arrangementer.class);
@@ -214,10 +214,10 @@ public class ImportKondisData {
                         con.createQuery(kontaktpersonSql)
                                 .addParameter("kontaktperson_idParam", UUID.randomUUID())
                                 .addParameter("arrangement_idParam", arrId)
-                                .addParameter("navnParam", person.getKontaktperson_navn())
-                                .addParameter("telefonParam", person.getKontaktperson_mobil())
-                                .addParameter("mobilParam", person.getKontaktperson_mobil())
-                                .addParameter("epostParam", person.getKontaktperson_epost())
+                                .addParameter("navnParam", person.getNavn())
+                                .addParameter("telefonParam", person.getTelefon())
+                                .addParameter("mobilParam", person.getMobil())
+                                .addParameter("epostParam", person.getEpost())
                                 .executeUpdate();
 
                     });
@@ -228,8 +228,8 @@ public class ImportKondisData {
                                 .addParameter("distanse_lengdeParam", distanse.getDistanse_lengde())
                                 .addParameter("distanse_starttidParam", distanse.getDistanse_starttid())
                                 .addParameter("distanse_startkontingentParam", distanse.getDistanse_startkontingent())
-                                .addParameter("distanse_fullforte_aaret_forParam", distanse.getDistanse_fullførte_året_før())
-                                .addParameter("distanse_barnelopParam", distanse.getDistanse_barneløp())
+                                .addParameter("distanse_fullforte_aaret_forParam", distanse.getDistanse_fullforte_aaret_for())
+                                .addParameter("distanse_barnelopParam", distanse.getDistanse_barnelop())
                                 .addParameter("distanse_stafettParam", distanse.getDistanse_stafett())
                                 .addParameter("distanse_etapperParam", distanse.getDistanse_etapper())
                                 .addParameter("distanse_kontrollmåltParam", distanse.getDistanse_kontrollmålt())

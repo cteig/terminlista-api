@@ -84,6 +84,8 @@ public class DatabaseTest {
         List<Arrangement> result = database.getArrangementsFraNavn(overskrift);
 
         Assert.assertEquals("SK Vidar", result.get(0).getArrangør());
+        Assert.assertTrue(result.get(0).getDistanseList().size()==2);
+        Assert.assertEquals("7,000", result.get(0).getDistanseList().get(0).getDistanse_lengde());
     }
 
 
@@ -114,6 +116,26 @@ public class DatabaseTest {
                     "'SK Vidar'," +
                     "'Oslo' );";
             con.createQuery(sql)
+                    .executeUpdate();
+
+            String distanseSql = "INSERT INTO Distanse(" +
+                    "distanse_id, " +
+                    "arrangement_id, " +
+                    "distanse_lengde, " +
+                    "distanse_starttid, " +
+                    "distanse_startkontingent) " +
+                    "values (" + ":distanse_idParam," +
+                    "'" + uuid + "' , " +
+                    ":distanse_lengdeParam," +
+                    "'12:00'," +
+                    "'100' );";
+            con.createQuery(distanseSql)
+                    .addParameter("distanse_idParam", UUID.randomUUID())
+                    .addParameter("distanse_lengdeParam", "7,000")
+                    .executeUpdate();
+            con.createQuery(distanseSql)
+                    .addParameter("distanse_idParam", UUID.randomUUID())
+                    .addParameter("distanse_lengdeParam", "3,000")
                     .executeUpdate();
 
         }

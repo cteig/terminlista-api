@@ -2,50 +2,70 @@ package domain;
 
 public class Kontaktperson {
 
-    private String kontaktperson_navn;
-    private String kontaktperson_telefon;
-    private String kontaktperson_mobil;
-    private String kontaktperson_epost;
+    private String kontaktperson_id;
+    private String arrangement_id;
+    private String navn;
+    private String telefon;
+    private String mobil;
+    private String epost;
 
-    public String getKontaktperson_navn() {
-        return kontaktperson_navn;
+    public String getKontaktperson_id() {
+        return kontaktperson_id;
     }
 
-    public void setKontaktperson_navn(String kontaktperson_navn) {
-        this.kontaktperson_navn = kontaktperson_navn;
+    public void setKontaktperson_id(String kontaktperson_id) {
+        this.kontaktperson_id = kontaktperson_id;
     }
 
-    public String getKontaktperson_telefon() {
-        return kontaktperson_telefon;
+    public String getArrangement_id() {
+        return arrangement_id;
     }
 
-    public void setKontaktperson_telefon(String kontaktperson_telefon) {
-        this.kontaktperson_telefon = kontaktperson_telefon;
+    public void setArrangement_id(String arrangement_id) {
+        this.arrangement_id = arrangement_id;
     }
 
-    public String getKontaktperson_mobil() {
-        return kontaktperson_mobil;
+    public String getNavn() {
+        return navn;
     }
 
-    public void setKontaktperson_mobil(String kontaktperson_mobil) {
-        this.kontaktperson_mobil = kontaktperson_mobil;
+    public void setNavn(String navn) {
+        this.navn = navn;
     }
 
-    public String getKontaktperson_epost() {
-        return kontaktperson_epost;
+    public String getTelefon() {
+        return telefon;
     }
 
-    public void setKontaktperson_epost(String kontaktperson_epost) {
-        this.kontaktperson_epost = kontaktperson_epost;
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
+
+    public String getMobil() {
+        return mobil;
+    }
+
+    public void setMobil(String mobil) {
+        this.mobil = mobil;
+    }
+
+    public String getEpost() {
+        return epost;
+    }
+
+    public void setEpost(String epost) {
+        this.epost = epost;
     }
 
     @Override
     public String toString() {
         return "Kontaktperson{" +
-                "kontaktperson_navn='" + kontaktperson_navn + '\'' +
-                ", kontaktperson_telefon='" + kontaktperson_telefon + '\'' +
-                ", kontaktperson_mobil='" + kontaktperson_mobil + '\'' +
-                ", kontaktperson_epost='" + kontaktperson_epost + '\'' +
+                "kontaktperson_id='" + kontaktperson_id + '\'' +
+                ", arrangement_id='" + arrangement_id + '\'' +
+                ", navn='" + navn + '\'' +
+                ", telefon='" + telefon + '\'' +
+                ", mobil='" + mobil + '\'' +
+                ", epost='" + epost + '\'' +
                 '}';
     }
 }

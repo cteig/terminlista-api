@@ -2,14 +2,32 @@ package domain;
 
 public class Distanse {
 
+    private String distanse_id;
+    private String arrangement_id;
     private String distanse_lengde;
     private String distanse_starttid;
     private String distanse_startkontingent;
-    private String distanse_fullførte_året_før;
-    private String distanse_barneløp;
+    private String distanse_fullforte_aaret_for;
+    private String distanse_barnelop;
     private String distanse_stafett;
     private String distanse_etapper;
     private String distanse_kontrollmålt;
+
+    public String getDistanse_id() {
+        return distanse_id;
+    }
+
+    public void setDistanse_id(String distanse_id) {
+        this.distanse_id = distanse_id;
+    }
+
+    public String getArrangement_id() {
+        return arrangement_id;
+    }
+
+    public void setArrangement_id(String arrangement_id) {
+        this.arrangement_id = arrangement_id;
+    }
 
     public String getDistanse_lengde() {
         return distanse_lengde;
@@ -35,20 +53,20 @@ public class Distanse {
         this.distanse_startkontingent = distanse_startkontingent;
     }
 
-    public String getDistanse_fullførte_året_før() {
-        return distanse_fullførte_året_før;
+    public String getDistanse_fullforte_aaret_for() {
+        return distanse_fullforte_aaret_for;
     }
 
-    public void setDistanse_fullførte_året_før(String distanse_fullførte_året_før) {
-        this.distanse_fullførte_året_før = distanse_fullførte_året_før;
+    public void setDistanse_fullforte_aaret_for(String distanse_fullforte_aaret_for) {
+        this.distanse_fullforte_aaret_for = distanse_fullforte_aaret_for;
     }
 
-    public String getDistanse_barneløp() {
-        return distanse_barneløp;
+    public String getDistanse_barnelop() {
+        return distanse_barnelop;
     }
 
-    public void setDistanse_barneløp(String distanse_barneløp) {
-        this.distanse_barneløp = distanse_barneløp;
+    public void setDistanse_barnelop(String distanse_barnelop) {
+        this.distanse_barnelop = distanse_barnelop;
     }
 
     public String getDistanse_stafett() {
@@ -78,11 +96,13 @@ public class Distanse {
     @Override
     public String toString() {
         return "Distanse{" +
-                "distanse_lengde='" + distanse_lengde + '\'' +
+                "distanse_id='" + distanse_id + '\'' +
+                ", arrangement_id='" + arrangement_id + '\'' +
+                ", distanse_lengde='" + distanse_lengde + '\'' +
                 ", distanse_starttid='" + distanse_starttid + '\'' +
                 ", distanse_startkontingent='" + distanse_startkontingent + '\'' +
-                ", distanse_fullførte_året_før='" + distanse_fullførte_året_før + '\'' +
-                ", distanse_barneløp='" + distanse_barneløp + '\'' +
+                ", distanse_fullforte_aaret_for='" + distanse_fullforte_aaret_for + '\'' +
+                ", distanse_barnelop='" + distanse_barnelop + '\'' +
                 ", distanse_stafett='" + distanse_stafett + '\'' +
                 ", distanse_etapper='" + distanse_etapper + '\'' +
                 ", distanse_kontrollmålt='" + distanse_kontrollmålt + '\'' +
